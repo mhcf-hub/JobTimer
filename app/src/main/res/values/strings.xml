@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">JobTimer</string>
+    <string name="header">Job Timer</string>
+    <string name="buttonTextNewJob">New Job</string>
+    <string name="buttonTextAllJobs">All Jobs</string>
+
+    <!--Strings for New Job Menu-->
+    <string name="newJobTitle">Title</string>
+    <string name="newJobColor">Color</string>
+    <string name="save">Save</string>
+    <string name="start">Start</string>
+    <string name="back">Back</string>
+    <string name="stop">stop</string>
+
+    <!--Strings for Job Running-->
+    <string name="runningHeader">Job is Running</string>
+    <string name="continuesingle">Continue</string>
+    <string name="pausesingle">Pause</string>
+    <string name="endsingle">End</string>
+
+
+</resources>
