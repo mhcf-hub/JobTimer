@@ -26,9 +26,9 @@ public class RoomJob {
     @ColumnInfo(name = "seconds")
     int seconds;
 
-    @NonNull
-    @ColumnInfo(name = "timings")
-    List<Timing> timings = new ArrayList<Timing>();
+//    @NonNull
+//    @ColumnInfo(name = "timings")
+//    List<Timing> timings = new ArrayList<Timing>();
 
     public RoomJob() {
 
@@ -67,12 +67,12 @@ public class RoomJob {
         this.seconds = seconds;
     }
 
-    @NonNull
-    public List<Timing> getTimings() {
-        return timings;
-    }
-
-    public void setTimings(@NonNull List<Timing> timings) {
-        this.timings = timings;
-    }
+//    @NonNull
+//    public List<Timing> getTimings() {
+//        return timings;
+//    }
+//
+//    public void setTimings(@NonNull List<Timing> timings) {
+//        this.timings = timings;
+//    }
 }
