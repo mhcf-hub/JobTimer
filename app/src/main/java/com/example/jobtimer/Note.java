@@ -7,7 +7,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "timings_table",
+@Entity(tableName = "notes_table",
         foreignKeys = @ForeignKey(entity = RoomJob.class,
                 parentColumns = "rid",
                 childColumns = "jobId",
@@ -25,7 +25,7 @@ public class Note {
     private int jobId;
 
     @NonNull
-    @ColumnInfo(name = "date")
+    @ColumnInfo(name = "content")
     String content;
 
     public Note(@NonNull String content) {

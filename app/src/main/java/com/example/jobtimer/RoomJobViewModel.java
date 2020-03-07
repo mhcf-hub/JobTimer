@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 
 public class RoomJobViewModel extends AndroidViewModel {
 
-    private RoomJobRepo roomJobRepo;
+    private JTRepo JTRepo;
 //    private TimingRepo timingRepo;
 
     private LiveData<List<RoomJob>> rAllJobs;
@@ -17,18 +17,18 @@ public class RoomJobViewModel extends AndroidViewModel {
 
     public RoomJobViewModel (Application application) {
         super(application);
-        roomJobRepo = new RoomJobRepo(application);
+        JTRepo = new JTRepo(application);
         //timingRepo = new TimingRepo(application);
-        rAllJobs = roomJobRepo.getAllJobs();
-  //      allTimings = roomJobRepo.getAllTimings();
+        rAllJobs = JTRepo.getAllJobs();
+  //      allTimings = JTRepo.getAllTimings();
     }
 
     LiveData<List<RoomJob>> getAllJobs() { return rAllJobs; }
 //    LiveData<List<Timing>> getAllTimings() { return allTimings; }
 
-    public void insert(RoomJob roomJob) { roomJobRepo.insert(roomJob); }
-    public void update(RoomJob roomJob) { roomJobRepo.update(roomJob); }
-//   public void insertTiming(Timing timing) { roomJobRepo.insertTiming(timing); }
+    public void insert(RoomJob roomJob) { JTRepo.insert(roomJob); }
+    public void update(RoomJob roomJob) { JTRepo.update(roomJob); }
+//   public void insertTiming(Timing timing) { JTRepo.insertTiming(timing); }
 
 
 

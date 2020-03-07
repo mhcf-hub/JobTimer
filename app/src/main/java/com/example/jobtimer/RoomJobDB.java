@@ -12,11 +12,12 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {RoomJob.class, Timing.class}, version = 1, exportSchema = false)
+@Database(entities = {RoomJob.class, Timing.class, Note.class}, version = 1, exportSchema = false)
 public abstract class RoomJobDB extends RoomDatabase {
 
     public abstract RoomJobDao rJobDao();
     public abstract TimingDao timingDao();
+    public abstract NoteDao noteDao();
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
