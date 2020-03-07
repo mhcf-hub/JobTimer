@@ -10,29 +10,25 @@ import androidx.lifecycle.LiveData;
 public class TimingViewModel extends AndroidViewModel {
 
     private JTRepo JTRepo;
-//  private TimingRepo timingRepo;
 
-   // private LiveData<List<RoomJob>> rAllJobs;
-  private LiveData<List<Timing>> allTimings;
+    private LiveData<List<Timing>> allTimings;
 
-    public TimingViewModel (Application application) {
+    public TimingViewModel(Application application) {
         super(application);
-       JTRepo = new JTRepo(application);
-//        timingRepo = new TimingRepo(application);
-   //     rAllJobs = JTRepo.getAllJobs();
+        JTRepo = new JTRepo(application);
         allTimings = JTRepo.getAllTimings();
     }
 
-   // LiveData<List<RoomJob>> getAllJobs() { return rAllJobs; }
-   LiveData<List<Timing>> getAllTimings() { return allTimings; }
+    LiveData<List<Timing>> getAllTimings() {
+        return allTimings;
+    }
 
-    //public void insert(RoomJob roomJob) { JTRepo.insert(roomJob); }
     public void insertTiming(Timing timing) {
-            JTRepo.insertTiming(timing);
-        }
+        JTRepo.insertTiming(timing);
+    }
 
-        public void update(Timing timing){
+    public void update(Timing timing) {
         JTRepo.updateTiming(timing);
-        }
+    }
 
 }

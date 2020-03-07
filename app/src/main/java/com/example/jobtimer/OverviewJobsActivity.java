@@ -210,6 +210,32 @@ public class OverviewJobsActivity extends AppCompatActivity {
             }
         });
 
+        ////Create of notesbutton
+        Button showNotes = new Button(this);
+
+        //Set TextString of notesbutton
+        showNotes.setText("Show Notes");
+
+        //Set styles.xml of notesbutton
+        showNotes.setTextAppearance(this, R.style.fontForJobOverviewButton);
+
+        //Set Width of notesbutton
+        showNotes.setWidth((int) (314 * scale + 0.5f));
+
+        //Set Backgroundcolor of notesbutton
+        showNotes.setBackgroundColor(getResources().getColor(R.color.lightestgrey));
+
+        //Assign params to notesbutton
+        showNotes.setLayoutParams(buttonParams);
+
+        //notesbutton clicklistener
+        showNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNotes(rJob.getRid());
+            }
+        });
+
 
         //Create Layout for job main color and button for start timing
         //Set Params
@@ -284,6 +310,9 @@ public class OverviewJobsActivity extends AppCompatActivity {
         //Add TimingsButton
         linearLayoutSingleJobWrapper.addView(showTimings);
 
+        //Add notesbutton
+        linearLayoutSingleJobWrapper.addView(showNotes);
+
         //Add JobColorView/Start timing
         linearLayoutSingleJobWrapper.addView(constColor);
         ////Add Text Call to Action
@@ -292,6 +321,13 @@ public class OverviewJobsActivity extends AppCompatActivity {
 
         //Add singleJobWrapper to allJobsWrapper
         linearLayoutWrappAll.addView(linearLayoutSingleJobWrapper);
+    }
+
+    //function to open Notes for this job
+    public void openNotes(int id){
+        Intent intent = new Intent(OverviewJobsActivity.this, NotesActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 
     //function to see overview of timings for job

@@ -10,11 +10,14 @@ class JTRepo {
 
     private RoomJobDao rJobDao;
     private TimingDao timingDao;
+    private NoteDao noteDao;
 
 
     private LiveData<List<RoomJob>> rAllJobs;
 
     private LiveData<List<Timing>> rTimings;
+
+    private LiveData<List<Note>> rNotes;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -24,8 +27,10 @@ class JTRepo {
         RoomJobDB db = RoomJobDB.getDatabase(application);
         rJobDao = db.rJobDao();
         timingDao = db.timingDao();
+        noteDao = db.noteDao();
         rAllJobs = rJobDao.getAlphabetizedWords();
         rTimings = timingDao.getTimings();
+        rNotes = noteDao.getNotes();
     }
 
     // Room executes all queries on a separate thread.
@@ -33,8 +38,8 @@ class JTRepo {
     LiveData<List<RoomJob>> getAllJobs() {
         return rAllJobs;
     }
-    LiveData<List<Timing>> getAllTimings() { return rTimings;
-    }
+    LiveData<List<Timing>> getAllTimings() { return rTimings; }
+    LiveData<List<Note>> getNotes() { return rNotes; }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
@@ -59,6 +64,18 @@ class JTRepo {
     void updateTiming(Timing timing){
         RoomJobDB.databaseWriteExecutor.execute(() -> {
             timingDao.update(timing);
+        });
+    }
+
+    void insertNote(Note note) {
+        RoomJobDB.databaseWriteExecutor.execute(() -> {
+            noteDao.insertNote(note);
+        });
+    }
+
+    void updateNote(Note note){
+        RoomJobDB.databaseWriteExecutor.execute(() -> {
+            noteDao.update(note);
         });
     }
 

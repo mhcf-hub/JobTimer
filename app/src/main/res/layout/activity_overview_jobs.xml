@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/textViewTitleTimings"
+        android:id="@+id/textViewNotesTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -24,7 +24,7 @@
     <ScrollView
         android:id="@+id/scrollViewJobs"
         android:layout_width="339dp"
-        android:layout_height="508dp"
+        android:layout_height="588dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
         android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitleTimings">
+        app:layout_constraintTop_toBottomOf="@+id/textViewNotesTitle">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

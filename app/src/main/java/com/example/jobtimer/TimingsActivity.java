@@ -115,7 +115,7 @@ public class TimingsActivity extends AppCompatActivity {
         textViewTimeTotal = (TextView) findViewById(R.id.textViewTimeTotal);
 
         //setJobTitle
-        title = (TextView) findViewById(R.id.textViewTitleTimings);
+        title = (TextView) findViewById(R.id.textViewNotesTitle);
         title.setText(rJob.getTitle());
 
         //dateFormat

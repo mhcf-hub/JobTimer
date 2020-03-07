@@ -1,5 +1,7 @@
 package com.example.jobtimer;
 
+import android.text.Editable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -28,8 +30,8 @@ public class Note {
     @ColumnInfo(name = "content")
     String content;
 
-    public Note(@NonNull String content) {
-        this.content = content;
+    public Note(@NonNull int jobId) {
+        this.jobId = jobId;
     }
 
     public int getId() {

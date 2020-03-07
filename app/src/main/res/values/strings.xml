@@ -4,6 +4,11 @@
     <string name="buttonTextNewJob">New Job</string>
     <string name="buttonTextAllJobs">All Jobs</string>
 
+    <!--String for NotesButton    -->
+    <string name="NewNote">New Note</string>
+    <string name="saveNotes">Save Notes</string>
+
+
     <!--Strings for New Job Menu-->
     <string name="newJobTitle">Title</string>
     <string name="newJobColor">Color</string>

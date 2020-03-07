@@ -9,18 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OverviewJobsActivity"></activity>
+        <activity android:name=".NotesActivity"></activity>
+        <activity android:name=".OverviewJobsActivity" />
         <activity android:name=".CreateNewJobActivity" />
         <activity android:name=".SingleJobUseActivity" />
         <activity android:name=".TimingsActivity" />
-        <activity android:name=".RoomNewJobActivity" />
-        <activity android:name=".TimingsJob" />
-        <activity android:name=".JobRunning" />
-        <activity
-            android:name=".SingleJob"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".JobsOverview" />
-        <activity android:name=".NewJob" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

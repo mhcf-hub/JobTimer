@@ -16,7 +16,7 @@ public interface NoteDao {
     // conflict resolution strategy
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertNoe(Note note);
+    void insertNote(Note note);
 
     @Query("DELETE FROM notes_table")
     void deleteAll();
