@@ -10,20 +10,21 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 @Dao
-public interface RoomJobDao {
+public interface TimingDao {
 
     // allowing the insert of the same word multiple times by passing a
     // conflict resolution strategy
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(RoomJob rJob);
 
-    @Query("DELETE FROM job_table")
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertTiming(Timing timing);
+
+    @Query("DELETE FROM timings_table")
     void deleteAll();
 
-    @Query("SELECT * from job_table")
-    LiveData<List<RoomJob>> getAlphabetizedWords();
+    @Query("SELECT * from timings_table")
+    LiveData<List<Timing>> getTimings();
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    void update(RoomJob rJob);
+    void update(Timing timing);
 
 }

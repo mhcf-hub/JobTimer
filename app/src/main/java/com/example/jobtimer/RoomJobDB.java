@@ -9,12 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {RoomJob.class}, version = 1, exportSchema = false)
+@Database(entities = {RoomJob.class, Timing.class}, version = 1, exportSchema = false)
 public abstract class RoomJobDB extends RoomDatabase {
 
     public abstract RoomJobDao rJobDao();
+    public abstract TimingDao timingDao();
+
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Since we didn't alter the table, there's nothing else to do here.
+        }
+    };
 
     private static volatile RoomJobDB INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -27,37 +36,12 @@ public abstract class RoomJobDB extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RoomJobDB.class, "word_database")
-
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
-
-//    .addCallback(sRoomDatabaseCallback)
-//
-//    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
-//        @Override
-//        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-//            super.onOpen(db);
-//
-//            // If you want to keep data through app restarts,
-//            // comment out the following block
-//            databaseWriteExecutor.execute(() -> {
-//                // Populate the database in the background.
-//                // If you want to start with more words, just add them.
-//                RoomJobDao dao = INSTANCE.rJobDao();
-//                dao.deleteAll();
-//
-//                RoomJob roomJob = new RoomJob();
-//                roomJob.setTitle("Valletest");
-//                dao.insert(roomJob);
-//            });
-//        }
-//    };
-
-
 
 }
 

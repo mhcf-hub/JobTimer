@@ -5,14 +5,18 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "job_table")
+@Entity(tableName = "job_table",
+        indices = {@Index("title")})
 public class RoomJob {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    @ColumnInfo(name = "rid")
+    private int rid;
 
     @NonNull
     @ColumnInfo(name = "title")
@@ -26,20 +30,17 @@ public class RoomJob {
     @ColumnInfo(name = "seconds")
     int seconds;
 
-//    @NonNull
-//    @ColumnInfo(name = "timings")
-//    List<Timing> timings = new ArrayList<Timing>();
 
-    public RoomJob() {
-
+    public RoomJob(String title) {
+        this.title = title;
     }
 
-    public int getId() {
-        return id;
+    public int getRid() {
+        return rid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRid(int rid) {
+        this.rid = rid;
     }
 
     @NonNull
@@ -67,12 +68,4 @@ public class RoomJob {
         this.seconds = seconds;
     }
 
-//    @NonNull
-//    public List<Timing> getTimings() {
-//        return timings;
-//    }
-//
-//    public void setTimings(@NonNull List<Timing> timings) {
-//        this.timings = timings;
-//    }
 }
