@@ -1,12 +1,5 @@
 package com.example.jobtimer;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
@@ -15,6 +8,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,8 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +24,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 public class SingleJobUseActivity extends AppCompatActivity {
 
@@ -70,13 +70,18 @@ public class SingleJobUseActivity extends AppCompatActivity {
     Calendar cal;
     Date now;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_job_use);
 
+
         //Seconds counter
         secondsCounted = 0;
+
+
 
         //Identify the job, the user has selected:
         Intent intent = getIntent();
@@ -105,8 +110,8 @@ public class SingleJobUseActivity extends AppCompatActivity {
                 jobTitleTextView = (TextView) findViewById(R.id.textViewJobTitle);
 
                 //sort out current job
-                for (RoomJob rIJob : rJobs){
-                    if (rIJob.getRid() == idIn){
+                for (RoomJob rIJob : rJobs) {
+                    if (rIJob.getRid() == idIn) {
                         //get current Job
                         rJob = rIJob;
 
@@ -128,93 +133,93 @@ public class SingleJobUseActivity extends AppCompatActivity {
             public void onChanged(@Nullable final List<Timing> timings) {
 
                 //Iterate through timings in DB to check for timings with current jobid
-                    for(Timing timing : timings){
+                for (Timing timing : timings) {
 
-                        //if ids match:
-                        if(timing.getJobId() == idIn){
+                    //if ids match:
+                    if (timing.getJobId() == idIn) {
 
-                            //put found timings into list for later use
-                            //Add them to list
-                            timingsFound.add(timing);
+                        //put found timings into list for later use
+                        //Add them to list
+                        timingsFound.add(timing);
 
 
-                            System.out.println(timing.getEnded() + " timing ended"
-                                    + timing.getId() + " timing id"
-                                    + timing.getDate() + " timing start"
-                                    + timing.getSeconds() + " timing seconds"
-                                    + timing.getTimeLapsed() + " timing end");
+                        System.out.println(timing.getEnded() + " timing ended"
+                                + timing.getId() + " timing id"
+                                + timing.getDate() + " timing start"
+                                + timing.getSeconds() + " timing seconds"
+                                + timing.getTimeLapsed() + " timing end");
 
-                        }
                     }
+                }
 
-                    //CHeck if job already has timings, avoid null pointer
-                    if(timingsFound.size() > 0){
-                        //if has timings
+                //CHeck if job already has timings, avoid null pointer
+                if (timingsFound.size() > 0) {
+                    //if has timings
 
-                        //get Current Timing, can only be last in List
-                        currentTiming = timingsFound.get(timingsFound.size() - 1);
+                    //get Current Timing, can only be last in List
+                    currentTiming = timingsFound.get(timingsFound.size() - 1);
 
-                        //display current seconds
-                        currentTimingTextView.setText(minutesHours(secondsCounted) + "");
+                    //display current seconds
+                    currentTimingTextView.setText(minutesHours(secondsCounted) + "");
 
-                        //Check if job is still running (returning from home screen through notification or after start)
-                        if(currentTiming.getEnded() == 1){
-                            //if is running first round:
+                    //Check if job is still running (returning from home screen through notification or after start)
+                    if (currentTiming.getEnded() == 1) {
+                        //if is running first round:
 
-                            //avoid second timer running
-                            buttonStartTiming.setEnabled(false);
+                        //avoid second timer running
+                        buttonStartTiming.setEnabled(false);
 
-                           //Animate stop button to show
-                            ObjectAnimator animation = ObjectAnimator.ofFloat( buttonStopTiming,
-                                    "translationY",
-                                    buttonStopTiming.getTranslationY(),
-                                    buttonStopTiming.getTranslationY() + 162);
+                        //Animate stop button to show
+                        ObjectAnimator animation = ObjectAnimator.ofFloat(buttonStopTiming,
+                                "translationY",
+                                buttonStopTiming.getTranslationY(),
+                                buttonStopTiming.getTranslationY() + 162);
 
-                            animation.setDuration(600);
-                            animation.start();
-                            animation.addListener(new AnimatorListenerAdapter() {
-                                public void onAnimationEnd(Animator animation) {
+                        animation.setDuration(600);
+                        animation.start();
+                        animation.addListener(new AnimatorListenerAdapter() {
+                            public void onAnimationEnd(Animator animation) {
 
-                                }
-                            });
-                            //Set timing to ended = 2, which means everything is running
-                            currentTiming.setEnded(2);
-
-                            //Save state
-                            timingViewModel.update(currentTiming);
-
-                        } else if(currentTiming.getEnded() == 2) {
-                            //if is running after first round:
-
-                            //set Start Button to Continue button
-                            buttonStartTiming.setText("Continue");
-
-                            //if Seconds Counterd = 0, means you are coming back from notification
-                            if(secondsCounted == 0){
-                                currentTimingTextView.setText(currentTiming.getSeconds() + "");
-                            }
-
-                            //Set translation of button to where it animated to
-                            buttonStopTiming.setTranslationY(162);
-                        }
-
-                        //Set Stop timing click listener, always same;
-                        buttonStopTiming.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                stopTimer();
                             }
                         });
-                    } else {
+                        //Set timing to ended = 2, which means everything is running
+                        currentTiming.setEnded(2);
 
-                        //if job has no timings:
+                        //Save state
+                        timingViewModel.update(currentTiming);
 
-                        //Create new Timing ended of 1 (important so start timer function will pick right choice)
-                        currentTiming = new Timing(idIn,0, "newjob", 1, "");
+                    } else if (currentTiming.getEnded() == 2) {
+                        //if is running after first round:
 
-                        ///And set current Seconds to display
-                        currentTimingTextView.setText(currentTiming.getSeconds() + "");
+                        //set Start Button to Continue button
+                        buttonStartTiming.setText("Continue");
+
+                        //if Seconds Counterd = 0, means you are coming back from notification
+                        if (secondsCounted == 0) {
+                            currentTimingTextView.setText(currentTiming.getSeconds() + "");
+                        }
+
+                        //Set translation of button to where it animated to
+                        buttonStopTiming.setTranslationY(162);
                     }
+
+                    //Set Stop timing click listener, always same;
+                    buttonStopTiming.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            stopTimer();
+                        }
+                    });
+                } else {
+
+                    //if job has no timings:
+
+                    //Create new Timing ended of 1 (important so start timer function will pick right choice)
+                    currentTiming = new Timing(idIn, 0, "newjob", 1, "");
+
+                    ///And set current Seconds to display
+                    currentTimingTextView.setText(currentTiming.getSeconds() + "");
+                }
 
 
                 //Start timer AFTER checking if timings exist and are running, start timer has choise that depends on it
@@ -227,7 +232,8 @@ public class SingleJobUseActivity extends AppCompatActivity {
                 });
             }
 
-            public void stopTimer(){
+            public void stopTimer() {
+                stopService();
                 started = false;
                 myTimer.cancel();
                 currentTiming.setEnded(0);
@@ -241,19 +247,13 @@ public class SingleJobUseActivity extends AppCompatActivity {
                 timingViewModel.update(currentTiming);
 
 
-
-
-
-
-
-
                 Intent intent = new Intent(SingleJobUseActivity.this, OverviewJobsActivity.class);
                 startActivity(intent);
             }
 
-            public void startTimer(){
+            public void startTimer() {
                 //no timing was foud, this is the first timing for a job:
-                if(currentTiming.getDate().equals("newjob")){
+                if (currentTiming.getDate().equals("newjob")) {
                     //get today's date
                     cal = Calendar.getInstance();
                     now = cal.getTime();
@@ -263,24 +263,27 @@ public class SingleJobUseActivity extends AppCompatActivity {
                     nextTiming.setDate(nowString);
                     timingViewModel.insertTiming(nextTiming);
 
-                    myTimer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            TimerMethod();
-                        }
-                    }, 0, 1000);
-                //Timings are found, and currentTiming (last in array) is still running (ended = 1)
-                } else if (currentTiming.getEnded() > 0){
+                    startService();
+
+//                    myTimer.schedule(new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            TimerMethod();
+//                        }
+//                    }, 0, 1000);
+                    //Timings are found, and currentTiming (last in array) is still running (ended = 1)
+                } else if (currentTiming.getEnded() > 0) {
                     secondsCounted = currentTiming.getSeconds();
-                    myTimer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            TimerMethod();
-                        }
-                    }, 0, 1000);
+                    startService();
+//                    myTimer.schedule(new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            TimerMethod();
+//                        }
+//                    }, 0, 1000);
                     buttonStartTiming.setEnabled(false);
-                } else if (currentTiming.getEnded() == 0){
-                    Timing nextTiming = new Timing(idIn,0, "", 1, "");
+                } else if (currentTiming.getEnded() == 0) {
+                    Timing nextTiming = new Timing(idIn, 0, "", 1, "");
 
                     cal = Calendar.getInstance();
                     now = cal.getTime();
@@ -290,13 +293,14 @@ public class SingleJobUseActivity extends AppCompatActivity {
 
                     timingViewModel.insertTiming(nextTiming);
                     System.out.println(timingsFound.size() + " timing current size");
-                    myTimer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            TimerMethod();
-                            System.out.println("timing current is starting");
-                        }
-                    }, 0, 1000);
+                    startService();
+//                    myTimer.schedule(new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            TimerMethod();
+//                            System.out.println("timing current is starting");
+//                        }
+//                    }, 0, 1000);
                     System.out.println(currentTiming.getId() + " id  timing current\n" +
                             currentTiming.getJobId() + " current timing current\n" +
                             currentTiming.getEnded() + " ended current timing current\n" +
@@ -322,7 +326,7 @@ public class SingleJobUseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         myTimer.cancel();
         timingViewModel.update(currentTiming);
@@ -331,9 +335,7 @@ public class SingleJobUseActivity extends AppCompatActivity {
     }
 
 
-
-    private void TimerMethod()
-    {
+    private void TimerMethod() {
         //This method is called directly by the timer
         //and runs in the same thread as the timer.
 
@@ -345,14 +347,17 @@ public class SingleJobUseActivity extends AppCompatActivity {
 
     private Runnable Timer_Tick = new Runnable() {
         public void run() {
-            if(currentTiming.getEnded() != 0){
+            if (currentTiming.getEnded() != 0) {
+
                 secondsCounted++;
                 currentTimingTextView.setText(minutesHours(secondsCounted) + "");
                 System.out.println(secondsCounted + " testor timing");
                 currentTiming.setSeconds(secondsCounted);
                 timingViewModel.update(currentTiming);
 
-                notificationLoad();
+                //notificationLoad();
+
+
             }
 
         }
@@ -362,7 +367,7 @@ public class SingleJobUseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (secondsCounted == 0 && started == false){
+        if (secondsCounted == 0 && started == false) {
             Intent intent = new Intent(SingleJobUseActivity.this, OverviewJobsActivity.class);
             startActivity(intent);
         } else {
@@ -375,7 +380,7 @@ public class SingleJobUseActivity extends AppCompatActivity {
         }
     }
 
-    public String minutesHours(int seconds){
+    public String minutesHours(int seconds) {
         //Create String to return
         String timeConverted;
 
@@ -386,34 +391,34 @@ public class SingleJobUseActivity extends AppCompatActivity {
         //counter = seconds so we can count how many minutes and subtract 60 seconds each minute,
         //until last started minute
         int counter = seconds;
-        for(int i = counter; i > 0; i--){
+        for (int i = counter; i > 0; i--) {
             if (i % 60 == 0) {
                 minutes++;
-                seconds-=60;
+                seconds -= 60;
             }
         }
         //counter = minutes so wen count how many hours and subtract 60 minutes each hour,
         //until last started hour
         counter = minutes;
-        for(int i = counter; i > 0; i--){
-            if(i % 60 == 0){
+        for (int i = counter; i > 0; i--) {
+            if (i % 60 == 0) {
                 hours++;
-                minutes-=60;
+                minutes -= 60;
             }
         }
 
         //Convert to a readable String, depending on seconds/minutes/hours > 0 and < 10
-        if(minutes == 0 && hours == 0){
-            if(seconds < 10){
+        if (minutes == 0 && hours == 0) {
+            if (seconds < 10) {
                 timeConverted = ("Time: 0" + seconds + " seconds");
 
             } else {
                 timeConverted = ("Time: " + seconds + " seconds");
 
             }
-        } else if(hours == 0){
-            if (minutes < 10){
-                if(seconds < 10){
+        } else if (hours == 0) {
+            if (minutes < 10) {
+                if (seconds < 10) {
                     timeConverted = ("Time: 0" + minutes + ":0" + seconds);
 
                 } else {
@@ -421,7 +426,7 @@ public class SingleJobUseActivity extends AppCompatActivity {
 
                 }
             } else {
-                if(seconds < 10){
+                if (seconds < 10) {
                     timeConverted = ("Time: " + minutes + ":0" + seconds);
 
 
@@ -431,9 +436,9 @@ public class SingleJobUseActivity extends AppCompatActivity {
                 }
             }
         } else {
-            if(hours < 10){
-                if (minutes < 10){
-                    if(seconds < 10){
+            if (hours < 10) {
+                if (minutes < 10) {
+                    if (seconds < 10) {
                         timeConverted = ("Time: 0" + hours + ":0" + minutes + ":0" + seconds);
 
                     } else {
@@ -441,7 +446,7 @@ public class SingleJobUseActivity extends AppCompatActivity {
 
                     }
                 } else {
-                    if(seconds < 10){
+                    if (seconds < 10) {
                         timeConverted = ("Time: 0" + hours + ":" + minutes + ":0" + seconds);
 
                     } else {
@@ -451,8 +456,8 @@ public class SingleJobUseActivity extends AppCompatActivity {
 
                 }
             } else {
-                if (minutes < 10){
-                    if(seconds < 10){
+                if (minutes < 10) {
+                    if (seconds < 10) {
                         timeConverted = ("Time: " + hours + ":0" + minutes + ":0" + seconds);
 
                     } else {
@@ -460,7 +465,7 @@ public class SingleJobUseActivity extends AppCompatActivity {
 
                     }
                 } else {
-                    if(seconds < 10){
+                    if (seconds < 10) {
                         timeConverted = ("Time: " + hours + ":" + minutes + ":0" + seconds);
 
                     } else {
@@ -475,20 +480,29 @@ public class SingleJobUseActivity extends AppCompatActivity {
         return timeConverted;
     }
 
-    public void notificationLoad(){
+    public void startService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        serviceIntent.putExtra("inputExtra", secondsCounted);
+        ContextCompat.startForegroundService(this, serviceIntent);
+
+    }
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        stopService(serviceIntent);
+    }
+
+    public void notificationLoad() {
         //Declare NotificationCompat mBuilder
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this.getApplicationContext(), "notify_001");
         //Declare intent for Nofitication to return to
-        Intent ii = new Intent(this.getApplicationContext(), SingleJobUseActivity.class);
+        Intent ii = new Intent(this, SingleJobUseActivity.class);
         ii.putExtra("id", idIn);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(ii);
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-
 
         bigText.bigText(minutesHours(secondsCounted) + "");
 
@@ -500,15 +514,13 @@ public class SingleJobUseActivity extends AppCompatActivity {
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
         mBuilder.setContentTitle("Your Title");
         mBuilder.setContentText("Your text");
-        mBuilder.setPriority(Notification.PRIORITY_LOW);
+        mBuilder.setPriority(Notification.PRIORITY_HIGH);
         mBuilder.setStyle(bigText);
 
         mNotificationManager =
                 (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-// === Removed some obsoletes
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String channelId = "Your_channel_id";
             NotificationChannel channel = new NotificationChannel(
                     channelId,
@@ -518,12 +530,16 @@ public class SingleJobUseActivity extends AppCompatActivity {
             mBuilder.setChannelId(channelId);
         }
 
+        mNotificationManager.notify(0, mBuilder.build());
 
 
-
-            mNotificationManager.notify(0, mBuilder.build());
+      //  ContextCompat.startForegroundService(this, ii);
 
 
 
     }
+
+
 }
+
+

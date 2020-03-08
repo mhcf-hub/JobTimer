@@ -38,30 +38,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //declare viewModel for counting jobs
-        roomJobViewModel = new ViewModelProvider(this).get(RoomJobViewModel.class);
-        roomJobViewModel.getAllJobs().observe(this, new Observer<List<RoomJob>>() {
-            @Override
-            public void onChanged(@Nullable final List<RoomJob> rJobs) {
-                // Update the cached copy of the words in the adapter.
-                System.out.println(rJobs + " jobs");
-                for (RoomJob rJob : rJobs){
-                    System.out.println(rJob.getTitle() + " job title");
-                }
-            }
-        });
-
-        roomJobViewModelTimings = new ViewModelProvider(this).get(TimingViewModel.class);
-        roomJobViewModelTimings.getAllTimings().observe(this, new Observer<List<Timing>>() {
-            @Override
-            public void onChanged(@Nullable final List<Timing> timings) {
-                // Update the cached copy of the words in the adapter.
-                System.out.println(timings + " job timings");
-                for (Timing timing : timings){
-                    System.out.println(timing + " job timings");
-                }
-            }
-        });
 
         //Declare buttons for Main menu
         ////create new Job

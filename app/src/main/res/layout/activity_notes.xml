@@ -18,7 +18,7 @@
         <Button
             android:id="@+id/buttonNewNote"
             android:layout_width="300dp"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:background="@color/lightestgrey"
@@ -32,7 +32,7 @@
         <Button
             android:id="@+id/buttonSaveNote"
             android:layout_width="300dp"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
@@ -54,7 +54,7 @@
             android:layout_marginEnd="32dp"
             android:fontFamily="sans-serif-smallcaps"
             android:text="asdf"
-            android:textSize="30sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
