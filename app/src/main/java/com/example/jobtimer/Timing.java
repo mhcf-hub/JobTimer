@@ -40,6 +40,17 @@ public class Timing {
     int ended;
 
     @NonNull
+    @ColumnInfo(name = "ended")
+    long start;
+
+
+    @NonNull
+    @ColumnInfo(name = "ended")
+    long end;
+
+
+
+    @NonNull
     @ColumnInfo(name = "timeLapsed")
     String timeLapsed;
 
@@ -99,5 +110,21 @@ public class Timing {
 
     public void setTimeLapsed(@NonNull String timeLapsed) {
         this.timeLapsed = timeLapsed;
+    }
+
+    public long getStart() {
+        return start;
+    }
+
+    public void setStart(long start) {
+        this.start = start;
+    }
+
+    public long getEnd() {
+        return end;
+    }
+
+    public void setEnd(long end) {
+        this.end = end;
     }
 }

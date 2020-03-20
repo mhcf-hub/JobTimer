@@ -339,7 +339,7 @@ public class OverviewJobsActivity extends AppCompatActivity {
 
     //function to start new timing for job
     public void singleJob(int id) {
-        Intent intent = new Intent(OverviewJobsActivity.this, SingleJobUseActivity.class);
+        Intent intent = new Intent(OverviewJobsActivity.this, SingleTimingActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
     }
