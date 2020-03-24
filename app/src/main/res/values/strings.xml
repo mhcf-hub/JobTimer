@@ -23,5 +23,11 @@
     <string name="pausesingle">Pause</string>
     <string name="endsingle">End</string>
 
+    <!--    String for Timingsoverview-->
+    <string name="editTiming">Edit</string>
+    <string name="set_to_now">set to now</string>
+    <string name="pick_date">Pick Date And Time</string>
+    <string name="total_job_time">Total Time: </string>
+
 
 </resources>

@@ -9,23 +9,49 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="642dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/buttonAddTiming"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/lightestgrey"
+            android:text="Add Timing"
+            app:layout_constraintStart_toEndOf="@+id/textViewTimeTotal"
+            app:layout_constraintTop_toBottomOf="@+id/constLayoutEditTimingSeperator" />
+
+        <ScrollView
+            android:id="@+id/scrollViewTimings"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constLayoutEditTimingSeperatorLow">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutTimingWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+        </ScrollView>
 
         <TextView
             android:id="@+id/textViewNotesTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
             android:fontFamily="sans-serif-smallcaps"
             android:text="@string/buttonTextAllJobs"
             android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,22 +59,36 @@
             android:id="@+id/textViewTimeTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="28dp"
             android:fontFamily="sans-serif-smallcaps"
             android:text="TextView"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewNotesTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/constLayoutEditTimingSeperator" />
 
-        <ScrollView
-            android:id="@+id/scrollViewTimings"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayoutEditTimingSeperatorLow"
             android:layout_width="0dp"
-            android:layout_height="448dp"
+            android:layout_height="5dp"
             android:layout_marginTop="8dp"
+            android:background="@color/blue"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTimeTotal" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonAddTiming">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayoutEditTimingSeperator"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNotesTitle">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

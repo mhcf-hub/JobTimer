@@ -43,7 +43,7 @@ public class OverviewJobsActivity extends AppCompatActivity {
 
         //get scrollview for displaying jobs and set backgroundcolor
         scrollViewJobs = (ScrollView) findViewById(R.id.scrollViewJobs);
-        scrollViewJobs.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        scrollViewJobs.setBackgroundColor(getResources().getColor(R.color.lightestgrey));
 
         //Create Linear Layout to wrap all jobs inside scroll view
         linearLayoutWrappAll = new LinearLayout(this);
@@ -131,22 +131,28 @@ public class OverviewJobsActivity extends AppCompatActivity {
         textViewTitle.setY(textY);
 
 
-        //Create Params for line seperators
+        //Create Params for line seperator 1
         ConstraintLayout.LayoutParams constLineParams = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         constLineParams.setMargins(25, 10, 25, 0);
 
-        //Create Line Seperators
+        //Create Line Seperator 1
         ConstraintLayout constline = new ConstraintLayout(this);
         constline.setLayoutParams(constLineParams);
 
+        //Create Params for line seperator 2
+        ConstraintLayout.LayoutParams constLineParams2 = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        constLineParams2.setMargins(25, 20, 25, 0);
+
+        //Create Line Seperator 2
         ConstraintLayout constline2 = new ConstraintLayout(this);
-        constline2.setLayoutParams(constLineParams);
+        constline2.setLayoutParams(constLineParams2);
 
         //Set Seperatorcolors and height
         int constBottomlineHeight = (int) (5 * scale + 0.5f);
         constline.getLayoutParams().height = constBottomlineHeight;
         constline.setBackgroundColor(rJob.getColor());
 
+        constBottomlineHeight = (int) (15 * scale + 0.5f);
         constline2.getLayoutParams().height = constBottomlineHeight;
         constline2.setBackgroundColor(rJob.getColor());
 
@@ -237,26 +243,26 @@ public class OverviewJobsActivity extends AppCompatActivity {
         });
 
 
-        //Create Layout for job main color and button for start timing
-        //Set Params
-        ConstraintLayout.LayoutParams constParams = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        constParams.setMargins(25, 10, 25, 0);
+//        //Create Layout for job main color and button for start timing
+//        //Set Params
+//        ConstraintLayout.LayoutParams constParams = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        constParams.setMargins(25, 10, 25, 0);
 
-        //Create Layout and Assing Params for Start timing/job color view
-        ConstraintLayout constColor = new ConstraintLayout(this);
-        constColor.setLayoutParams(constParams);
+//        //Create Layout and Assing Params for Start timing/job color view
+//        ConstraintLayout constColor = new ConstraintLayout(this);
+//        constColor.setLayoutParams(constParams);
 
-        //Set height and color for start/job color view
-        int constHeight = (int) (55 * scale + 0.5f);
-        constColor.getLayoutParams().height = constHeight;
-        constColor.setBackgroundColor(rJob.getColor());
-
-        constColor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                singleJob(rJob.getRid());
-            }
-        });
+//        //Set height and color for start/job color view
+//        int constHeight = (int) (55 * scale + 0.5f);
+//        constColor.getLayoutParams().height = constHeight;
+//        constColor.setBackgroundColor(rJob.getColor());
+//
+//        constColor.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                singleJob(rJob.getRid());
+//            }
+//        });
 
 
         //TextView for Call to Action/Start Timing
@@ -313,10 +319,13 @@ public class OverviewJobsActivity extends AppCompatActivity {
         //Add notesbutton
         linearLayoutSingleJobWrapper.addView(showNotes);
 
-        //Add JobColorView/Start timing
-        linearLayoutSingleJobWrapper.addView(constColor);
-        ////Add Text Call to Action
-        constColor.addView(clickHereToTimeText);
+        //Add second Line Seperator
+        linearLayoutSingleJobWrapper.addView(constline2);
+
+//        //Add JobColorView/Start timing
+//        linearLayoutSingleJobWrapper.addView(constColor);
+//        ////Add Text Call to Action
+//        constColor.addView(clickHereToTimeText);
 
 
         //Add singleJobWrapper to allJobsWrapper
@@ -350,6 +359,5 @@ public class OverviewJobsActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(OverviewJobsActivity.this, MainActivity.class);
         startActivity(intent);
-
     }
 }

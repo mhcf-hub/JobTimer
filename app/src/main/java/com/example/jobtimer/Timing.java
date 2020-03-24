@@ -15,51 +15,33 @@ import androidx.room.PrimaryKey;
                 parentColumns = "rid",
                 childColumns = "jobId",
                 onDelete = ForeignKey.CASCADE),
-        indices = {@Index("jobId"), @Index("seconds"), @Index("date"), @Index("ended")})
+        indices = {@Index("jobId"), @Index("ended"), @Index("start"), @Index("end")})
 public class Timing {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
 
-
     @NonNull
     @ColumnInfo(name = "jobId")
     private int jobId;
-
-    @NonNull
-    @ColumnInfo(name = "seconds")
-    int seconds;
-
-    @NonNull
-    @ColumnInfo(name = "date")
-    String date;
 
     @NonNull
     @ColumnInfo(name = "ended")
     int ended;
 
     @NonNull
-    @ColumnInfo(name = "ended")
+    @ColumnInfo(name = "start")
     long start;
 
 
     @NonNull
-    @ColumnInfo(name = "ended")
+    @ColumnInfo(name = "end")
     long end;
 
-
-
-    @NonNull
-    @ColumnInfo(name = "timeLapsed")
-    String timeLapsed;
-
-    public Timing(int jobId, int seconds, String date, int ended, String timeLapsed) {
+    public Timing(int jobId, int ended) {
         this.jobId = jobId;
-        this.seconds = seconds;
-        this.date = date;
         this.ended = ended;
-        this.timeLapsed = timeLapsed;
     }
 
     public int getId() {
@@ -78,38 +60,12 @@ public class Timing {
         this.jobId = jobId;
     }
 
-    public int getSeconds() {
-        return seconds;
-    }
-
-    public void setSeconds(int seconds) {
-        this.seconds = seconds;
-    }
-
-    @NonNull
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(@NonNull String date) {
-        this.date = date;
-    }
-
     public int getEnded() {
         return ended;
     }
 
     public void setEnded(int ended) {
         this.ended = ended;
-    }
-
-    @NonNull
-    public String getTimeLapsed() {
-        return timeLapsed;
-    }
-
-    public void setTimeLapsed(@NonNull String timeLapsed) {
-        this.timeLapsed = timeLapsed;
     }
 
     public long getStart() {
